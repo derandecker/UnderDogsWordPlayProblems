@@ -3,14 +3,14 @@ import java.io.IOException
 import java.util.*
 
 
-// first try, doesn't yet work
+// Not quite there yet, still tryings
 fun vowelsInOrder(line: String): Boolean {
 
-    if (!line.contains('A') &&
-        !line.contains('E') &&
-        !line.contains('I') &&
-        !line.contains('O') &&
-        !line.contains('U')
+    if (!(line.contains('A') &&
+        line.contains('E') &&
+        line.contains('I') &&
+        line.contains('O') &&
+        line.contains('U'))
     ) {
         return false
     }
@@ -29,23 +29,42 @@ fun vowelsInOrder(line: String): Boolean {
 
     val charArr = line.split("")
     charArr.forEachIndexed { index, it ->
-        if (it == "A" && !noMoreA)
+        if (it == "A" && !noMoreA) {
             indexA = index
             noMoreA = true
-        if (it == "E" && !noMoreE)
+        }
+        if (it == "E" && !noMoreE) {
             indexE = index
             noMoreE = true
-        if (it == "I" && !noMoreI)
+        }
+        if (it == "I" && !noMoreI) {
             indexI = index
             noMoreI = true
-        if (it == "O" && !noMoreO)
+        }
+        if (it == "O" && !noMoreO) {
             indexO = index
             noMoreO = true
-        if (it == "U" && !noMoreU)
+        }
+        if (it == "U" && !noMoreU) {
             indexU = index
             noMoreU = true
+        }
     }
-    return ((indexA < indexE) && (indexI < indexO) && (indexO < indexU))
+
+    println(line)
+    println("$indexA, $indexE, $indexI, $indexO, $indexU")
+
+    val listOfIndices = mutableListOf<Int>()
+    listOfIndices.add(indexA)
+    listOfIndices.add(indexE)
+    listOfIndices.add(indexI)
+    listOfIndices.add(indexO)
+    listOfIndices.add(indexU)
+    val sortedIndices = listOfIndices.toSortedSet()
+
+    if (indexA + indexE + indexI + indexO + indexU > 0) {
+        return (sortedIndices == listOfIndices)
+    } else return false
 }
 
 fun main() {

@@ -2,32 +2,38 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-//not quite there but on the right track
-fun checkDoubleLetters(line: String): Boolean {
-    var c: Char = 'A'
-    var doubleLetter: String
+fun checkAllLines(doubleLetter: String): Boolean {
+    val filename = "/Users/deran/IdeaProjects/Wordplay1/src/main/resources/sowpods.txt"
+    val sc = Scanner(File(filename))
+    while (sc.hasNextLine()) {
+        val line = sc.nextLine()
+        if (line.contains(doubleLetter)) {
+            return false
+        }
+    }
+    return true
+}
+
+fun main() {
+
     try {
+        val solutions = mutableListOf<Char>()
+
+        var c: Char = 'A'
+        var doubleLetter: String
         while (c <= 'Z') {
             doubleLetter = buildString {
                 this.append(c)
                 this.append(c)
             }
-            return line.contains(doubleLetter)
+            if (checkAllLines(doubleLetter)) {
+                solutions.add(c)
+            }
+            ++c
         }
-    } catch (e: Error) {
-    }
-    return false
-}
 
-fun main() {
-    val filename = "/Users/deran/IdeaProjects/Wordplay1/src/main/resources/sowpods.txt"
+        println(solutions)
 
-    try {
-        val sc = Scanner(File(filename))
-        while (sc.hasNextLine()) {
-            val line = sc.nextLine()
-            checkDoubleLetters(line)
-        }
     } catch (e: IOException) {
         e.printStackTrace()
     }
